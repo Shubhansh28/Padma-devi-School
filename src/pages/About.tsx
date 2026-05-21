@@ -13,68 +13,16 @@ import {
   Globe
 } from 'lucide-react';
 
+import { values, achievements, faculty } from '../data/aboutData';
+
 const About = () => {
-  const values = [
-    {
-      icon: Target,
-      title: 'Excellence',
-      description: 'Striving for the highest standards in education and character development'
-    },
-    {
-      icon: Heart,
-      title: 'Compassion',
-      description: 'Fostering empathy, kindness, and understanding in all our interactions'
-    },
-    {
-      icon: Lightbulb,
-      title: 'Innovation',
-      description: 'Embracing modern teaching methods and technology for effective learning'
-    },
-    {
-      icon: Globe,
-      title: 'Global Perspective',
-      description: 'Preparing students to be responsible global citizens'
-    }
-  ];
-
-  const achievements = [
-    'CG Affiliation with Outstanding Performance',
-    'State-level Sports Championships',
-    'Cultural Excellence Awards',
-    '97% Board Exam Pass Rate',
-    'Digital Learning Pioneer School'
-  ];
-
-  const faculty = [
-    {
-      name: 'Mr. Shivam Kesharwani',
-      position: 'Chair Person',
-      qualification: 'Ph.D. in Education, M.Ed.',
-      experience: '30+ years',
-      image: 'https://res.cloudinary.com/dtwsktjgj/image/upload/c_fill,g_face,h_256,w_384/shivam_gupta_website_ur3a0s?auto=compress&cs=tinysrgb&w=400'
-    },
-    {
-      name: 'Mrs. Vinita Kesharwani',
-      position: 'Director',
-      qualification: 'M.Sc., B.Ed.',
-      experience: '15+ years',
-      image: 'https://res.cloudinary.com/dtwsktjgj/image/upload/e_improve/v1751728446/WhatsApp_Image_2025-07-05_at_20.38.49_cbe969b7_zm0dsj.jpg?auto=compress&cs=tinysrgb&w=400'
-    },
-    {
-      name: 'Mrs. Ranjana Thakur',
-      position: 'Principal',
-      qualification: 'B.A., M.A., B.Ed.',
-      experience: '15+ years',
-      image: 'https://res.cloudinary.com/dtwsktjgj/image/upload/f_auto/ranjana_madam_website_img_o94xjt?_a=BAMAK+a60?auto=compress&cs=tinysrgb&w=400'
-    }
-  ];
 
   return (
     <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.5 }}
+      initial={{ opacity: 0, filter: 'blur(10px)', y: 20 }}
+      animate={{ opacity: 1, filter: 'blur(0px)', y: 0 }}
+      exit={{ opacity: 0, filter: 'blur(10px)', y: -20 }}
+      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
       className="pt-20"
     >
       {/* Hero Section */}
@@ -99,7 +47,7 @@ const About = () => {
       </section>
 
       {/* Mission & Vision */}
-      <section className="py-20 bg-white">
+      <section className="py-20 relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <motion.div
@@ -169,7 +117,7 @@ const About = () => {
             {values.map((value, index) => (
               <motion.div
                 key={index}
-                className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 group text-center"
+                className="glass-card p-8 rounded-2xl hover-lift transition-all duration-300 group text-center"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
@@ -188,7 +136,7 @@ const About = () => {
       </section>
 
       {/* History & Achievements */}
-      <section className="py-20 bg-white">
+      <section className="py-20 relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <motion.div
@@ -244,9 +192,9 @@ const About = () => {
                   className="w-full h-96 object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-primary-900/50 to-transparent"></div>
-                <div className="absolute bottom-6 left-6 text-white">
+                <div className="absolute bottom-6 left-6 text-gray-900">
                   <h3 className="text-2xl font-bold mb-2">10+ Years of Excellence</h3>
-                  <p className="text-white/90">Building futures, one student at a time</p>
+                  <p className="text-gray-900/90">Building futures, one student at a time</p>
                 </div>
               </div>
             </motion.div>
@@ -276,7 +224,7 @@ const About = () => {
             {faculty.map((member, index) => (
               <motion.div
                 key={index}
-                className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group"
+                className="glass-card rounded-2xl hover-lift transition-all duration-300 overflow-hidden group"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
@@ -295,7 +243,7 @@ const About = () => {
                   <h3 className="text-xl font-bold text-gray-900 mb-1">{member.name}</h3>
                   <p className="text-primary-600 font-medium mb-2">{member.position}</p>
                   <p className="text-gray-600 text-sm mb-1">{member.qualification}</p>
-                  <p className="text-gray-500 text-sm">{member.experience} in Education</p>
+                  <p className="text-gray-600 text-sm">{member.experience} in Education</p>
                 </div>
               </motion.div>
             ))}

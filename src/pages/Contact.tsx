@@ -8,8 +8,11 @@ import {
   Send,
   User,
   MessageSquare,
-  Building
+  Building,
+  ExternalLink
 } from 'lucide-react';
+
+import { baseBranches, contactInfo } from '../data/contactData';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -40,50 +43,29 @@ const Contact = () => {
     window.open(whatsappUrl, '_blank');
   };
 
-  const branches = [
-    {
-      name: 'Branch 1 (Main Campus)',
-      address: 'Mini Talkies Road, Satyam Vihar Colony, Changurabhata, Raipur, Chhattisgarh 492013',
-      phone: '7805992001 , 7805992004',
-      // email: 'branch1@padmadevischool.edu.in',
-      timings: 'Mon - Sat: 8:00 AM - 4:00 PM'
-    },
-    {
-      name: 'Branch 2',
-      address: 'Shanti Chowk, Purani Basti, Raipur, Chhattisgarh 492001',
-      phone: '7805992001 , 7805992003',
-      // email: 'branch2@padmadevischool.edu.in',
-      timings: 'Mon - Sat: 8:00 AM - 4:00 PM'
-    }
-  ];
+  const [activeMap, setActiveMap] = useState(0);
 
-  const contactInfo = [
-    {
-      icon: Phone,
-      title: 'Phone Numbers',
-      details: ['7805992001', '7805992003', '7805992004'],
-      color: 'from-blue-500 to-blue-700'
-    },
-    {
-      icon: Mail,
-      title: 'Email Address',
-      details: ['pdps.school@gmail.com', 'admissions@padmadevischool.edu.in'],
-      color: 'from-green-500 to-green-700'
-    },
-    {
-      icon: Clock,
-      title: 'Office Hours',
-      details: ['Monday - Friday: 8:00 AM - 4:00 PM', 'Saturday: 8:00 AM - 2:00 PM'],
-      color: 'from-purple-500 to-purple-700'
-    }
-  ];
+  // Dynamically generate map URLs from the addresses so we don't hardcode messy URLs
+  // Using address search queries ensures the Google Maps place card appears from the start
+  const branches = baseBranches.map(branch => {
+    // If a specific override is provided (like coordinates), use that instead of the address string
+    const queryText = branch.mapQueryOverride || `Padma Devi Public School ${branch.address}`;
+    const searchQuery = encodeURIComponent(queryText);
+    
+    // Use zoom level 16 for better visibility, especially when using coordinates
+    return {
+      ...branch,
+      mapEmbed: `https://maps.google.com/maps?q=${searchQuery}&t=&z=16&ie=UTF8&iwloc=&output=embed`,
+      mapLink: `https://www.google.com/maps/search/${searchQuery}`
+    };
+  });
 
   return (
     <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.5 }}
+      initial={{ opacity: 0, filter: 'blur(10px)', y: 20 }}
+      animate={{ opacity: 1, filter: 'blur(0px)', y: 0 }}
+      exit={{ opacity: 0, filter: 'blur(10px)', y: -20 }}
+      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
       className="pt-20"
     >
       {/* Hero Section */}
@@ -108,7 +90,7 @@ const Contact = () => {
       </section>
 
       {/* Contact Info Cards */}
-      <section className="py-20 bg-white">
+      <section className="py-20 relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             className="text-center mb-16"
@@ -288,15 +270,63 @@ const Contact = () => {
                 Our <span className="text-primary-600">Locations</span>
               </h2>
 
-              {/* Map Placeholder */}
-              <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
-                <div className="h-64 bg-gradient-to-br from-primary-100 to-primary-200 flex items-center justify-center">
-                  <div className="text-center">
-                    <MapPin className="w-16 h-16 text-primary-600 mx-auto mb-4" />
-                    <p className="text-primary-700 font-medium">Interactive Map</p>
-                    <p className="text-primary-600 text-sm">Click to view on Google Maps</p>
-                  </div>
+              {/* Interactive Map */}
+              <div className="glass-card rounded-2xl overflow-hidden">
+                {/* Branch Tabs */}
+                <div className="flex border-b border-gray-200">
+                  {branches.map((branch, i) => (
+                    <button
+                      key={i}
+                      onClick={() => setActiveMap(i)}
+                      className={`flex-1 px-4 py-3 text-sm font-semibold transition-all duration-300 ${
+                        activeMap === i
+                          ? 'bg-primary-600 text-white'
+                          : 'bg-gray-50 text-gray-600 hover:bg-gray-100'
+                      }`}
+                    >
+                      <MapPin className="w-4 h-4 inline-block mr-1 -mt-0.5" />
+                      {branch.name}
+                    </button>
+                  ))}
                 </div>
+
+                {/* Map Embed */}
+                <div className="relative h-72">
+                  <iframe
+                    key={activeMap}
+                    src={branches[activeMap].mapEmbed}
+                    width="100%"
+                    height="100%"
+                    style={{ border: 0 }}
+                    allowFullScreen
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    title={`Map - ${branches[activeMap].name}`}
+                    className="absolute inset-0 z-0"
+                  />
+                  
+                  {/* Custom 'Open in Maps' Overlay (fixes missing place card for coordinates) */}
+                  <a
+                    href={branches[activeMap].mapLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="absolute top-2.5 left-2.5 z-50 glass-card px-3 py-2 rounded shadow-md text-[#1a73e8] font-medium text-[13px] flex items-center gap-1.5 hover:bg-gray-50 transition-colors cursor-pointer"
+                  >
+                    Open in Maps
+                    <ExternalLink className="w-4 h-4" />
+                  </a>
+                </div>
+
+                {/* Open in Google Maps link */}
+                <a
+                  href={branches[activeMap].mapLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-2 px-4 py-3 bg-gray-50 text-primary-600 font-medium text-sm hover:bg-primary-50 transition-colors duration-300"
+                >
+                  <MapPin className="w-4 h-4" />
+                  Open in Google Maps
+                </a>
               </div>
 
               {/* Branch Information */}
@@ -304,7 +334,7 @@ const Contact = () => {
                 {branches.map((branch, index) => (
                   <motion.div
                     key={index}
-                    className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
+                    className="glass-card p-6 rounded-xl hover-lift transition-all duration-300"
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: index * 0.1 }}

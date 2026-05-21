@@ -14,6 +14,8 @@ import {
   Share2
 } from 'lucide-react';
 
+import { getGalleryImages } from '../data/galleryData';
+
 const Gallery = () => {
   const { category } = useParams<{ category: string }>();
   const [mediaFiles, setMediaFiles] = useState<any[]>([]);
@@ -56,213 +58,10 @@ const Gallery = () => {
     }
   };
 
-  // Sample media files (in a real app, this would load from the actual folder)
-  const sampleMediaFiles = {
-    campus: [
-      {
-        id: 1,
-        type: 'image',
-        src: 'https://images.pexels.com/photos/207692/pexels-photo-207692.jpeg?auto=compress&cs=tinysrgb&w=800',
-        thumbnail: 'https://images.pexels.com/photos/207692/pexels-photo-207692.jpeg?auto=compress&cs=tinysrgb&w=400',
-        title: 'Main Building',
-        description: 'Our beautiful main academic building'
-      },
-      {
-        id: 2,
-        type: 'image',
-        src: 'https://images.pexels.com/photos/289740/pexels-photo-289740.jpeg?auto=compress&cs=tinysrgb&w=800',
-        thumbnail: 'https://images.pexels.com/photos/289740/pexels-photo-289740.jpeg?auto=compress&cs=tinysrgb&w=400',
-        title: 'School Garden',
-        description: 'Lush green gardens for outdoor activities'
-      },
-      {
-        id: 3,
-        type: 'image',
-        src: 'https://images.pexels.com/photos/159844/cellular-education-classroom-159844.jpeg?auto=compress&cs=tinysrgb&w=800',
-        thumbnail: 'https://images.pexels.com/photos/159844/cellular-education-classroom-159844.jpeg?auto=compress&cs=tinysrgb&w=400',
-        title: 'Campus Courtyard',
-        description: 'Central courtyard for student gatherings'
-      }
-    ],
-    events: [
- {
-      id: 1,
-      type: 'image',
-      src: '/media/events/Event 1.jpg',
-      thumbnail: '/media/events/Event 1.jpg',
-      title: 'Annual Function',
-    },
-    {
-      id: 2,
-      type: 'image',
-      src: '/media/events/Event 2.jpg',
-      thumbnail: '/media/events/Event 2.jpg',
-      title: 'Annual Function',
-    },    
-    {
-      id: 3,
-      type: 'image',
-      src: '/media/events/Event 3.jpg',
-      thumbnail: '/media/events/Event 3.jpg',
-      title: 'Annual Function',
-    },
-    {
-      id: 4,
-      type: 'image',
-      src: '/media/events/Event 4.jpg',
-      thumbnail: '/media/events/Event 4.jpg',
-      title: 'Annual Function',
-    },
-     {
-      id: 5,
-      type: 'image',
-      src: '/media/events/Event 5.jpg',
-      thumbnail: '/media/events/Event 5.jpg',
-      title: 'Annual Function',
-    },
-    {
-      id: 6,
-      type: 'image',
-      src: '/media/events/Event 6.jpg',
-      thumbnail: '/media/events/Event 6.jpg',
-      title: 'Annual Function',
-    },    
-    {
-      id: 7,
-      type: 'image',
-      src: '/media/events/Event 7.jpg',
-      thumbnail: '/media/events/Event 7.jpg',
-      title: 'Annual Function',
-    },
-    {
-      id: 8,
-      type: 'image',
-      src: '/media/events/Event 8.jpg',
-      thumbnail: '/media/events/Event 8.jpg',
-      title: 'Annual Function',
-    },
-     {
-      id: 9,
-      type: 'image',
-      src: '/media/events/Event 9.jpg',
-      thumbnail: '/media/events/Event 9.jpg',
-      title: 'Annual Function',
-    },
-    {
-      id: 10,
-      type: 'image',
-      src: '/media/events/Event 10.jpg',
-      thumbnail: '/media/events/Event 10.jpg',
-      title: 'Annual Function',
-    },    
-    {
-      id: 11,
-      type: 'image',
-      src: '/media/events/Event 11.jpg',
-      thumbnail: '/media/events/Event 11.jpg',
-      title: 'Annual Function',
-    },
-    {
-      id: 12,
-      type: 'image',
-      src: '/media/events/Event 12.jpg',
-      thumbnail: '/media/events/Event 12.jpg',
-      title: 'Annual Function',
-    },
-    {
-      id: 13,
-      type: 'image',
-      src: '/media/events/Event 13.jpg',
-      thumbnail: '/media/events/Event 13.jpg',
-      title: 'Annual Function',
-    },
-    {
-      id: 14,
-      type: 'image',
-      src: '/media/events/Event 14.jpg',
-      thumbnail: '/media/events/Event 14.jpg',
-      title: 'Annual Function',
-    }      
-  ],
-    sports: [
-      {
-        id: 1,
-        type: 'image',
-        src: 'https://images.pexels.com/photos/163444/sport-treadmill-tor-route-163444.jpeg?auto=compress&cs=tinysrgb&w=800',
-        thumbnail: 'https://images.pexels.com/photos/163444/sport-treadmill-tor-route-163444.jpeg?auto=compress&cs=tinysrgb&w=400',
-        title: 'Sports Complex',
-        description: 'Modern sports facilities for various activities'
-      },
-      {
-        id: 2,
-        type: 'image',
-        src: 'https://images.pexels.com/photos/274422/pexels-photo-274422.jpeg?auto=compress&cs=tinysrgb&w=800',
-        thumbnail: 'https://images.pexels.com/photos/274422/pexels-photo-274422.jpeg?auto=compress&cs=tinysrgb&w=400',
-        title: 'Basketball Court',
-        description: 'Professional basketball court for tournaments'
-      }
-    ],
-    labs: [
-      {
-        id: 1,
-        type: 'image',
-        src: 'https://images.pexels.com/photos/2280549/pexels-photo-2280549.jpeg?auto=compress&cs=tinysrgb&w=800',
-        thumbnail: 'https://images.pexels.com/photos/2280549/pexels-photo-2280549.jpeg?auto=compress&cs=tinysrgb&w=400',
-        title: 'Chemistry Lab',
-        description: 'Well-equipped chemistry laboratory'
-      },
-      {
-        id: 2,
-        type: 'image',
-        src: 'https://images.pexels.com/photos/2280571/pexels-photo-2280571.jpeg?auto=compress&cs=tinysrgb&w=800',
-        thumbnail: 'https://images.pexels.com/photos/2280571/pexels-photo-2280571.jpeg?auto=compress&cs=tinysrgb&w=400',
-        title: 'Physics Lab',
-        description: 'Advanced physics laboratory with modern equipment'
-      }
-    ],
-    library: [
-      {
-        id: 1,
-        type: 'image',
-        src: 'https://images.pexels.com/photos/159711/books-bookstore-book-reading-159711.jpeg?auto=compress&cs=tinysrgb&w=800',
-        thumbnail: 'https://images.pexels.com/photos/159711/books-bookstore-book-reading-159711.jpeg?auto=compress&cs=tinysrgb&w=400',
-        title: 'Main Library',
-        description: 'Extensive collection of books and resources'
-      },
-      {
-        id: 2,
-        type: 'image',
-        src: 'https://images.pexels.com/photos/1370295/pexels-photo-1370295.jpeg?auto=compress&cs=tinysrgb&w=800',
-        thumbnail: 'https://images.pexels.com/photos/1370295/pexels-photo-1370295.jpeg?auto=compress&cs=tinysrgb&w=400',
-        title: 'Reading Area',
-        description: 'Quiet reading spaces for students'
-      }
-    ],
-    classrooms: [
-      {
-        id: 1,
-        type: 'image',
-        src: 'https://images.pexels.com/photos/8471929/pexels-photo-8471929.jpeg?auto=compress&cs=tinysrgb&w=800',
-        thumbnail: 'https://images.pexels.com/photos/8471929/pexels-photo-8471929.jpeg?auto=compress&cs=tinysrgb&w=400',
-        title: 'Smart Classroom',
-        description: 'Technology-enabled learning environment'
-      },
-      {
-        id: 2,
-        type: 'image',
-        src: 'https://images.pexels.com/photos/159844/cellular-education-classroom-159844.jpeg?auto=compress&cs=tinysrgb&w=800',
-        thumbnail: 'https://images.pexels.com/photos/159844/cellular-education-classroom-159844.jpeg?auto=compress&cs=tinysrgb&w=400',
-        title: 'Interactive Classroom',
-        description: 'Modern classroom with interactive displays'
-      }
-    ]
-  };
 
   useEffect(() => {
-    // In a real application, this would scan the actual folder
-    // For now, we'll use sample data
-    if (category && sampleMediaFiles[category as keyof typeof sampleMediaFiles]) {
-      setMediaFiles(sampleMediaFiles[category as keyof typeof sampleMediaFiles]);
+    if (category) {
+      setMediaFiles(getGalleryImages(category));
     }
   }, [category]);
 
@@ -311,10 +110,10 @@ const Gallery = () => {
 
   return (
     <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.5 }}
+      initial={{ opacity: 0, filter: 'blur(10px)', y: 20 }}
+      animate={{ opacity: 1, filter: 'blur(0px)', y: 0 }}
+      exit={{ opacity: 0, filter: 'blur(10px)', y: -20 }}
+      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
       className="pt-20"
     >
       {/* Header */}
@@ -333,13 +132,13 @@ const Gallery = () => {
               <ArrowLeft className="w-5 h-5 mr-2" />
               Back to Home
             </Link>
-            <h1 className="text-5xl md:text-6xl font-bold font-serif mb-4">
+            <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold font-serif mb-4">
               {currentCategory.title}
             </h1>
-            <p className="text-xl md:text-2xl max-w-3xl leading-relaxed opacity-90">
+            <p className="text-base sm:text-xl md:text-2xl max-w-3xl leading-relaxed opacity-90">
               {currentCategory.description}
             </p>
-            <div className="mt-6 text-white/80">
+            <div className="mt-6 text-gray-900/80">
               <span className="text-lg font-medium">{mediaFiles.length} items in this gallery</span>
             </div>
           </motion.div>
@@ -347,7 +146,7 @@ const Gallery = () => {
       </section>
 
       {/* Gallery Grid */}
-      <section className="py-20 bg-white">
+      <section className="py-20 relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {mediaFiles.length === 0 ? (
             <motion.div
@@ -379,15 +178,18 @@ const Gallery = () => {
                   key={media.id}
                   className="group cursor-pointer"
                   initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '100px' }}
+                  transition={{ duration: 0.4, delay: Math.min(index * 0.05, 0.3) }}
                   onClick={() => openLightbox(media, index)}
                 >
-                  <div className="relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 bg-white">
+                  <div className="relative overflow-hidden rounded-xl hover-lift transition-all duration-500 glass-card p-2">
                     <div className="aspect-w-4 aspect-h-3 relative">
                       <img
                         src={media.thumbnail}
                         alt={media.title}
+                        loading="lazy"
+                        decoding="async"
                         className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
                       />
                       {media.type === 'video' && (
@@ -504,10 +306,10 @@ const Gallery = () => {
               </div>
 
               {/* Media Info */}
-              <div className="absolute bottom-4 left-4 right-4 bg-black/50 backdrop-blur-sm text-white p-4 rounded-lg">
+              <div className="absolute bottom-4 left-4 right-4 bg-black/50 backdrop-blur-sm text-gray-900 p-4 rounded-lg">
                 <h3 className="text-xl font-bold mb-1">{selectedMedia.title}</h3>
-                <p className="text-white/80">{selectedMedia.description}</p>
-                <div className="mt-2 text-sm text-white/60">
+                <p className="text-gray-900/80">{selectedMedia.description}</p>
+                <div className="mt-2 text-sm text-gray-900/60">
                   {currentIndex + 1} of {mediaFiles.length}
                 </div>
               </div>

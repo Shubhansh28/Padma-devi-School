@@ -37,11 +37,11 @@ const Footer = () => {
     { icon: Facebook, href: '#', color: 'hover:text-blue-600' },
     { icon: Instagram, href: '#', color: 'hover:text-pink-600' },
     { icon: Youtube, href: '#', color: 'hover:text-red-600' },
-    { icon: Twitter, href: '#', color: 'hover:text-blue-400' },
+    { icon: Twitter, href: '#', color: 'hover:text-[#1a73e8]' },
   ];
 
   return (
-    <footer className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white">
+    <footer className="bg-gradient-to-br from-primary-950 via-primary-900 to-primary-950 border-t border-primary-800 text-white">
       {/* Main Footer Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">

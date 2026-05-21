@@ -128,10 +128,10 @@ function App() {
             {currentSlide.headline}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <button className="bg-gradient-to-r from-yellow-400 to-orange-500 text-black px-8 py-3 text-sm sm:text-base rounded-full font-bold hover:scale-105 transition-transform duration-300 shadow-lg">
+            <button className="bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-8 py-3 text-sm sm:text-base rounded-full font-bold hover:scale-105 transition-transform duration-300 shadow-lg">
               Apply for Admission
             </button>
-            <button className="border-2 border-white text-white px-8 py-3 text-sm sm:text-base rounded-full font-bold hover:bg-white hover:text-black transition-all duration-300">
+            <button className="border-2 border-white text-white px-8 py-3 text-sm sm:text-base rounded-full font-bold hover:glass-card hover:text-white transition-all duration-300">
               Take a Virtual Tour
             </button>
           </div>
@@ -145,7 +145,7 @@ function App() {
             key={i}
             onClick={() => setIndex(i)}
             className={`w-3 h-3 rounded-full transition-colors duration-300 ${
-              index === i ? 'bg-white' : 'bg-white/50 hover:bg-white/75'
+              index === i ? 'glass-card' : 'bg-white/50 hover:bg-white/75'
             }`}
             aria-label={`Go to slide ${i + 1}`}
           />

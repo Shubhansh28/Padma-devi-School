@@ -1,5 +1,4 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 import { Facebook, Instagram, Youtube, Twitter, Linkedin, MessageCircle } from 'lucide-react';
 
 // Main App Component to display the SocialMediaBar
@@ -69,7 +68,7 @@ const SocialMediaBar = () => {
               target="_blank"
               rel="noopener noreferrer"
               className={`
-                flex items-center justify-center w-14 h-14 text-white
+                flex items-center justify-center w-10 h-10 md:w-14 md:h-14 text-white
                 transition-all duration-300 ease-in-out
                 ${social.color} ${social.hoverColor}
                 shadow-md
@@ -80,17 +79,15 @@ const SocialMediaBar = () => {
               // Adding will-change hints to the browser for smoother animations
               style={{ willChange: 'transform' }}
             >
-              <social.icon className="w-6 h-6 transition-transform duration-300 group-hover:scale-110" />
+              <social.icon className="w-5 h-5 md:w-6 md:h-6 transition-transform duration-300 group-hover:scale-110" />
             </a>
 
             {/* Hover Label for Desktop (hidden on mobile as hover is not a standard mobile interaction) */}
             <div 
-              className="hidden lg:block absolute right-full mr-4 px-3 py-2 bg-gray-900 text-white text-sm rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-x-4 group-hover:translate-x-0 whitespace-nowrap pointer-events-none"
-              // Adding will-change hints to the browser for smoother animations
+              className={`hidden lg:block absolute right-full mr-4 px-3 py-2 ${social.color} text-white text-sm rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-x-4 group-hover:translate-x-0 whitespace-nowrap pointer-events-none`}
               style={{ willChange: 'opacity, transform' }}
             >
-              <span className="font-medium">{social.name}</span>
-              {/* Arrow pointing to the icon */}
+              <span className="font-bold">{social.name}</span>
               <div className="absolute left-full top-1/2 -translate-y-1/2 border-4 border-transparent border-l-gray-900"></div>
             </div>
           </div>
